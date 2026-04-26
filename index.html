@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics | Free-Edu Portal</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/3197/3197967.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #010816;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #3a86ff;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --danger: #ff4d4d;
+            --success: #00ff88;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .ambient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(58, 134, 255, 0.08), transparent 40%);
+            z-index: -2;
+        }
+
+        /* --- GLOBAL NAVIGATION --- */
+        nav {
+            position: sticky; top: 15px; z-index: 1000;
+            max-width: 1200px; margin: 10px auto; padding: 15px 25px;
+            background: rgba(10, 15, 30, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 25px;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            animation: slideInDown 0.6s ease;
+        }
+
+        nav.nav-hidden { transform: translateY(-100px); opacity: 0; }
+
+        .logo-link { text-decoration: none; display: flex; align-items: center; animation: slideInLeft 0.6s ease; }
+        .logo { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: 0.85rem; 
+            letter-spacing: 3px; 
+            color: var(--accent); 
+            transition: 0.3s;
+        }
+        .logo-link:hover .logo { filter: brightness(1.3); }
+
+        .search-container { flex: 1; max-width: 450px; order: 2; margin: 0 20px; animation: scaleIn 0.6s ease 0.1s backwards; }
+        .search-bar {
+            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border);
+            border-radius: 50px; padding: 10px 20px; color: white; outline: none; transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .search-bar:focus { border-color: var(--accent); background: rgba(255,255,255,0.05); }
+
+        .nav-actions { order: 3; display: flex; gap: 10px; animation: slideInRight 0.6s ease 0.1s backwards; }
+        .nav-btn {
+            background: var(--glass); border: 1px solid var(--glass-border); color: white;
+            padding: 8px 16px; border-radius: 50px; cursor: pointer; font-size: 0.7rem;
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .nav-btn:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); transition: all 0.3s ease; box-shadow: 0 8px 15px rgba(58, 134, 255, 0.3); }
+
+        /* --- YEAR TABS --- */
+        .tabs-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: 60px auto 40px;
+            padding: 0 20px;
+            animation: fadeInUp 0.7s ease 0.2s backwards;
+        }
+        .tab-btn {
+            background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-dim);
+            padding: 14px 10px; border-radius: 18px; cursor: pointer; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            font-weight: 600; font-size: 0.9rem; text-align: center;
+        }
+        .tab-btn.active {
+            background: var(--accent); color: white; border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.3);
+            animation: pulse 0.5s ease;
+        }
+
+        /* --- SUBJECT GRID & CARDS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; }
+        .subject-grid { 
+            display: grid; gap: 20px; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            animation: fadeInUp 0.7s ease 0.3s backwards;
+        }
+
+        .subject-card {
+            position: relative;
+            background: #0a111a; border: 1px solid var(--glass-border);
+            padding: 50px 25px; border-radius: 28px; text-align: center;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer; text-decoration: none; color: white;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: var(--bg-img);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            z-index: 1;
+            transition: transform 0.6s ease;
+        }
+
+        .subject-card h3, .subject-card span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subject-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            border-color: var(--accent); 
+            box-shadow: 0 20px 40px rgba(58, 134, 255, 0.2);
+        }
+        .subject-card:hover::before { transform: scale(1.1); opacity: 0.5; }
+        
+        .subject-card h3 { font-size: 1.2rem; margin-bottom: 8px; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .subject-card span { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 10px; }
+
+        .hidden { 
+            display: none !important; 
+            opacity: 0;
+            animation: fadeOut 0.3s ease;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* --- MODALS --- */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px);
+            display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+        }
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: #0a111a; border: 1px solid var(--glass-border);
+            padding: 35px; border-radius: 30px; max-width: 550px; width: 100%;
+            transform: scale(0.8); opacity: 0; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex; flex-direction: column; max-height: 90vh;
+        }
+        .modal.active .modal-content { transform: scale(1); opacity: 1; }
+        
+        .scroll-area {
+            overflow-y: auto;
+            flex-grow: 1;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            scrollbar-width: thin;
+        }
+        
+        /* Custom Scrollbar */
+        .scroll-area::-webkit-scrollbar { width: 4px; }
+        .scroll-area::-webkit-scrollbar-track { background: transparent; }
+        .scroll-area::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        .close-btn { 
+            margin-top: 25px; background: var(--accent); border: none; padding: 12px 30px; 
+            color: white; border-radius: 50px; cursor: pointer; width: 100%; font-weight: 700; 
+            flex-shrink: 0; transition: all 0.3s ease;
+        }
+        .close-btn:hover { 
+            background: var(--accent); 
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
+        }
+
+        /* --- MOBILE RESPONSIVENESS & REFRENCED FIXES --- */
+        @media (max-width: 1024px) { 
+            .subject-grid { grid-template-columns: repeat(3, 1fr); } 
+        }
+
+        @media (max-width: 768px) {
+            nav { width: 95%; gap: 12px; padding: 15px; }
+            .logo { order: 1; }
+            .nav-actions { order: 2; }
+            .search-container { order: 3; max-width: 100%; width: 100%; margin: 5px 0 0 0; }
+            
+            .tabs-container { grid-template-columns: repeat(2, 1fr); }
+
+            .subject-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 12px; 
+            }
+            .subject-card { padding: 35px 15px; border-radius: 20px; }
+            .subject-card h3 { font-size: 0.85rem; }
+            .subject-card span { font-size: 0.6rem; }
+            
+            .nav-btn { padding: 8px 10px; font-size: 0.6rem; }
+            .modal-content { padding: 20px; }
+        }
+
+        .about-scroll-container {
+            max-height: 85vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: none;
+        }
+        .about-scroll-container::-webkit-scrollbar { display: none; }
+
+        @media (max-width: 480px) {
+            .about-content {
+                width: 92% !important;
+                max-height: 90vh !important;
+            }
+            .tech-stack-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            .pp-container {
+                width: 120px !important;
+                height: 120px !important;
+            }
+            .dev-name { font-size: 1.4rem !important; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="ambient"></div>
+
+    <nav id="navbar">
+        <a href="/Free-EDU-BD/" class="logo-link">
+            <div class="logo">FREE-EDU</div>
+        </a>
+        <div class="search-container">
+            <input type="text" id="globalSearch" class="search-bar" placeholder="Search economics subjects..." onkeyup="filterSubjects()">
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="openModal('legalModal')">License</button>
+            <button class="nav-btn" onclick="openModal('aboutModal')">About</button>
+        </div>
+    </nav>
+
+<div id="legalModal" class="modal">
+    <div class="modal-content">
+        <h2 style="color: var(--accent); margin-bottom: 20px; font-family: 'Syncopate'; font-size: 1rem; text-align: center; flex-shrink: 0;">Terms & License</h2>
+        
+        <div class="scroll-area" style="overflow-y: auto; flex-grow: 1; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--glass-border); padding: 5px;">
+            <div style="padding: 20px; text-align: left;">
+                <h3 style="color: var(--accent); font-size: 0.85rem; margin-bottom: 15px; font-family: 'Syncopate'; text-align: left;">01. CONDUCT & COMPLIANCE</h3>
+                
+                <p style="color: var(--danger); font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; justify-content: flex-start; gap: 8px; text-align: left;">🚫 Piracy Strictly Prohibited</p>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.6; text-align: left;">
+                    Downloading and piracy is strictly prohibited. This platform is 100% Free and Open Source for academic support only. Users are strictly prohibited from attempting to download, "rip," or redistribute content.
+                </p>
+
+                <p style="color: var(--success); font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; justify-content: flex-start; gap: 8px; text-align: left;">🤍 Open Access</p>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.6; text-align: left;">
+                    Free to use, modify, and distribute educational content. This site operates in accordance with the <b>YouTube Terms of Service</b>. Users must not attempt to bypass advertisements or modify core player functionality.
+                </p>
+
+                <p style="color: var(--accent); font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; justify-content: flex-start; gap: 8px; text-align: left;">📂 Open Source (MIT)</p>
+                <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 25px; line-height: 1.6; text-align: left;">
+                    The code for this portal is licensed under <b>MIT</b>. You may modify the design for personal use, but video content belongs to the original YouTube copyright holders.
+                </p>
+
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 20px 0;">
+
+                <h3 style="color: var(--accent); font-size: 0.85rem; margin-bottom: 15px; font-family: 'Syncopate'; text-align: left;">02. CONTENT DISCLAIMER</h3>
+                <ul style="list-style: none; padding: 0; color: var(--text-dim); font-size: 0.85rem; line-height: 1.8; text-align: left;">
+                    <li style="margin-bottom: 10px; text-align: left;"><b>• Ownership:</b> All videos belong strictly to their creators on YouTube.</li>
+                    <li style="margin-bottom: 10px; text-align: left;"><b>• No Hosting:</b> We do not host or upload video files. We use the <b>YouTube API</b>.</li>
+                    <li style="margin-bottom: 10px; text-align: left;"><b>• Availability:</b> Content is determined by uploaders; if they remove it, it disappears here.</li>
+                    <li style="margin-bottom: 10px; text-align: left;"><b>• Affiliation:</b> Reference to schools is not an endorsement.</li>
+                </ul>
+
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 20px 0;">
+
+                <h3 style="color: var(--accent); font-size: 0.85rem; margin-bottom: 15px; font-family: 'Syncopate'; text-align: left;">03. CONTACT & DMCA</h3>
+                <p style="color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; text-align: left;">
+                    Creators wishing to remove videos from our directory, please contact us. We remove links within 48 hours. <br><br>
+                    <i>Note: Disabling embedding in YouTube Studio will remove the video here automatically.</i>
+                </p>
+            </div>
+        </div>
+        
+        <button class="close-btn" onclick="closeModal('legalModal')">I AGREE</button>
+    </div>
+</div>
+
+<style>
+    /* 3. MODAL STYLING */
+    .modal {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px);
+        display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+    }
+    .modal-content {
+        background: #0a111a; border: 1px solid var(--glass-border);
+        padding: 30px; border-radius: 30px; max-width: 600px; width: 100%;
+        display: flex; flex-direction: column; max-height: 85vh;
+        transform: scale(0.8); opacity: 0; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .modal.active { display: flex; }
+    .modal.active .modal-content { transform: scale(1); opacity: 1; }
+    
+    .close-btn { 
+        margin-top: 15px; background: var(--accent); border: none; 
+        padding: 12px 30px; color: white; border-radius: 50px; 
+        cursor: pointer; width: 100%; font-weight: 700; flex-shrink: 0; 
+    }
+
+    .scroll-area::-webkit-scrollbar { width: 4px; }
+    .scroll-area::-webkit-scrollbar-track { background: transparent; }
+    .scroll-area::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+</style>
+
+<script>
+    /* 4. MODAL LOGIC */
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+    }
+
+    // Close modal if clicking on the dark backdrop
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal(event.target.id);
+        }
+    }
+</script>
+
+<div id="aboutModal" class="modal">
+        <style>
+            .about-scroll-container {
+                max-height: 85vh; 
+                overflow-y: auto; 
+                overflow-x: hidden;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                scrollbar-width: none; 
+            }
+            .about-scroll-container::-webkit-scrollbar {
+                display: none; 
+            }
+
+            @media (max-width: 480px) {
+                .about-content {
+                    width: 92% !important;
+                    max-height: 90vh !important;
+                    padding: 0 !important;
+                }
+                .tech-stack-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 12px !important;
+                }
+                .pp-container {
+                    width: 120px !important; 
+                    height: 120px !important;
+                }
+                .dev-name {
+                    font-size: 1.4rem !important;
+                }
+            }
+        </style>
+
+        <div class="modal-content about-content" style="max-width: 480px; width: 100%; padding: 0; overflow: hidden; border: 1px solid var(--glass-border); background: #0a111a;">
+            
+            <div class="about-scroll-container">
+                <div style="height: 140px; background: linear-gradient(45deg, #010816 0%, #1a2233 100%); position: relative; flex-shrink: 0; overflow: hidden;">
+                    <div style="position: absolute; inset: 0; opacity: 0.3; background-image: radial-gradient(var(--accent) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, #0a111a, transparent);"></div>
+                </div>
+                
+                <div style="padding: 25px; text-align: center; position: relative;">
+                    <div class="pp-container" style="width: 130px; height: 130px; margin: -85px auto 20px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; border: 4px solid var(--accent); background: #010816; overflow: hidden; box-shadow: 0 15px 40px rgba(58, 134, 255, 0.5); position: relative; z-index: 10;">
+                        <img src="https://i.postimg.cc/W3nmK9XC/RahulDasEmon.jpg" alt="Rahul Das Emon" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+
+                    <h2 class="dev-name" style="color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.6rem; margin-bottom: 2px;">Rahul Das Emon</h2>
+                    <p style="color: var(--accent); font-family: 'Syncopate'; font-size: 0.7rem; letter-spacing: 3px; font-weight: 700; margin-bottom: 15px; text-transform: uppercase;">Lead Developer</p>
+                    
+                    <p style="color: var(--text-dim); line-height: 1.6; font-size: 0.85rem; margin-bottom: 25px;">
+                        Passionate Honours student engineering open-source academic solutions. Specialized in AM5 architecture, video workflow optimization, and Android system modification.
+                    </p>
+
+                    <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; flex-wrap: wrap;">
+                        <span style="background: rgba(58, 134, 255, 0.1); color: var(--accent); padding: 5px 12px; border-radius: 10px; font-size: 0.6rem; font-weight: 700; border: 1px solid rgba(58, 134, 255, 0.2);">FULL-STACK</span>
+                        <span style="background: rgba(0, 255, 136, 0.1); color: var(--success); padding: 5px 12px; border-radius: 10px; font-size: 0.6rem; font-weight: 700; border: 1px solid rgba(0, 255, 136, 0.2);">HARDWARE MOD</span>
+                        <span style="background: rgba(255, 77, 77, 0.1); color: var(--danger); padding: 5px 12px; border-radius: 10px; font-size: 0.6rem; font-weight: 700; border: 1px solid rgba(255, 77, 77, 0.2);">HSC '24</span>
+                    </div>
+
+                    <div style="text-align: left; background: rgba(255,255,255,0.02); padding: 18px; border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 25px;">
+                        <p style="color: var(--text-main); font-size: 0.7rem; font-weight: 800; margin-bottom: 12px; font-family: 'Syncopate'; letter-spacing: 1px;">Technical Stack</p>
+                        <div class="tech-stack-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; color: var(--text-dim); font-size: 0.8rem;">
+                            <div style="display: flex; align-items: center; gap: 6px;">⚡ Premiere Pro</div>
+                            <div style="display: flex; align-items: center; gap: 6px;">⚡ Root & ROM</div>
+                            <div style="display: flex; align-items: center; gap: 6px;">⚡ PC Troubleshooting</div>
+                            <div style="display: flex; align-items: center; gap: 6px;">⚡ Open Source</div>
+                        </div>
+                    </div>
+
+                    <button class="close-btn" onclick="closeModal('aboutModal')" style="margin-top: 0; background: var(--accent); color: white; border: none; font-size: 0.8rem; letter-spacing: 1px; font-weight: 700; padding: 15px; border-radius: 15px;">
+                        CLOSE PROFILE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="showYear(1, this)">1st Year</button>
+        <button class="tab-btn" onclick="showYear(2, this)">2nd Year</button>
+        <button class="tab-btn" onclick="showYear(3, this)">3rd Year</button>
+        <button class="tab-btn" onclick="showYear(4, this)">4th Year</button>
+    </div>
+
+    <div class="container">
+        <div id="year1" class="year-content subject-grid">
+            <a href="#" class="subject-card" data-name="basic mathematics" style="--bg-img: url('https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=600');">
+                <h3>Basic Math</h3><span>Quantitative</span>
+            </a>
+            <a href="#" class="subject-card" data-name="microeconomics" style="--bg-img: url('https://images.unsplash.com/photo-1611974715855-958e6ca39b81?auto=format&fit=crop&q=80&w=600');">
+                <h3>Microeconomics</h3><span>Core Major</span>
+            </a>
+            <a href="#" class="subject-card" data-name="macroeconomics" style="--bg-img: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600');">
+                <h3>Macroeconomics</h3><span>Core Major</span>
+            </a>
+            <a href="/Free-EDU-BD/economics/ict/" class="subject-card" data-name="ict" style="--bg-img: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600');">
+                <h3>ICT</h3><span>Skill Based</span>
+            </a>
+        </div>
+
+        <div id="year2" class="year-content subject-grid hidden">
+            <a href="#" class="subject-card" data-name="intermediate micro" style="--bg-img: url('https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&q=80&w=600');">
+                <h3>Inter. Micro</h3><span>Core</span>
+            </a>
+        </div>
+
+        <div id="year3" class="year-content subject-grid hidden">
+            <a href="#" class="subject-card" data-name="public finance" style="--bg-img: url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=600');">
+                <h3>Public Finance</h3><span>Advanced</span>
+            </a>
+        </div>
+
+        <div id="year4" class="year-content subject-grid hidden">
+            <a href="#" class="subject-card" data-name="econometrics" style="--bg-img: url('https://images.unsplash.com/photo-1454165833767-02a6ed8a69b8?auto=format&fit=crop&q=80&w=600');">
+                <h3>Econometrics</h3><span>Analysis</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+        });
+
+        function showYear(yearNum, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.year-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById('year' + yearNum).classList.remove('hidden');
+        }
+
+        function filterSubjects() {
+            let input = document.getElementById('globalSearch').value.toLowerCase();
+            document.querySelectorAll('.subject-card').forEach(card => {
+                let name = card.getAttribute('data-name');
+                let shouldHide = !name.includes(input);
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                if (shouldHide) {
+                    card.classList.add('hidden');
+                    card.style.opacity = '0.3';
+                } else {
+                    card.classList.remove('hidden');
+                    card.style.opacity = '1';
+                }
+            });
+        }
+
+        function openModal(id) { 
+            document.getElementById(id).classList.add('active'); 
+            document.body.style.overflow = 'hidden'; 
+        }
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('active'); 
+            document.body.style.overflow = 'auto'; 
+        }
+    </script>
+</body>
+</html>
