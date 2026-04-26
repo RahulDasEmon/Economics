@@ -1,6 +1,6 @@
-# 🛡️ BMC-ECO
+# 🛡️ BMC-ECONOMICS
 
-**BMC-ECO** is a high-performance, open-source academic portal engineered to provide students with a streamlined, searchable interface for mastering **Economics**.
+**BMC-ECONOMICS** is a high-performance, open-source academic portal engineered to provide students with a streamlined, searchable interface for mastering **Economics**.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)
