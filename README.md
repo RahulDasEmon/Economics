@@ -1,6 +1,6 @@
-# 🛡️ FREE-EDU-BD
+# 🛡️ FREE-EDU
 
-**FREE-EDU-BD** is a high-performance, open-source academic portal engineered to provide students with a streamlined, searchable interface for mastering **Economics**.
+**FREE-EDU** is a high-performance, open-source academic portal engineered to provide students with a streamlined, searchable interface for mastering **Economics**.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)
