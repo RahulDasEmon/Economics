@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributors | FREE-EDU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #030712;
+            background-image: 
+                radial-gradient(at 100% 0%, rgba(30, 58, 138, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+        }
+
+        .profile-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 41, 59, 0.4);
+        }
+
+        /* Number placed in the inner space/padding */
+        .contributor-number {
+            position: absolute;
+            top: 12px;
+            left: 20px;
+            font-size: 11px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.1em;
+            z-index: 10;
+        }
+
+        /* Modal Blur View */
+        #profileModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        #profileModal.active {
+            display: flex;
+        }
+
+        /* Responsive Shrinks */
+        @media (max-width: 640px) {
+            .join-box { padding: 1.25rem !important; margin-bottom: 2.5rem !important; }
+            .join-title { font-size: 1.25rem !important; }
+            .join-desc { font-size: 0.75rem !important; }
+            .profile-card { border-radius: 2rem !important; padding: 1.25rem !important; }
+            .contributor-number { font-size: 9px !important; top: 10px !important; left: 14px !important; }
+            .card-name { font-size: 1rem !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-200 antialiased min-h-screen pb-20">
+
+    <div class="max-w-6xl mx-auto px-6 pt-12">
+        
+        <div class="join-box bg-slate-900/50 border border-slate-800 backdrop-blur-xl rounded-[2.5rem] p-6 mb-16 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+            <div class="text-center md:text-left">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-1">Contribute to</h2>
+                <p class="join-title text-2xl font-extrabold text-white">Add your profile here♥️</p>
+                <p class="join-desc text-slate-500 text-sm">Contribute code or data to help the community.</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="#" class="flex items-center gap-2 px-6 py-3 bg-slate-100 text-slate-950 rounded-xl font-bold text-sm hover:bg-white transition-all transform active:scale-95 shadow-lg shadow-white/5">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub (Code)
+                </a>
+                <a href="#" class="flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-500 transition-all transform active:scale-95 shadow-lg shadow-emerald-600/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Excel (Data)
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">01</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 shadow-inner bg-slate-800">
+                    <img src="https://i.postimg.cc/W3nmK9XC/Rahul-Das-Emon.jpg" alt="Rahul" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1 tracking-tight">Rahul</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-4 py-1">Lead Developer</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">02</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1 tracking-tight">Sarah Chen</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-4 py-1">Data Scientist</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">03</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Siam" alt="Siam" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1">Siam Hossain</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-purple-400 bg-purple-400/10 border border-purple-400/20 rounded-full px-4 py-1">Contributor</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">04</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anika" alt="Anika" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1">Anika Rahat</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-pink-400 bg-pink-400/10 border border-pink-400/20 rounded-full px-4 py-1">UI Designer</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">05</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Zayan" alt="Zayan" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1">Zayan Malik</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-orange-400 bg-orange-400/10 border border-orange-500/20 rounded-full px-4 py-1">Maintenance</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">06</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tanvir" alt="Tanvir" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1">Tanvir Ahmed</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-full px-4 py-1">Tester</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">07</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Faria" alt="Faria" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1">Faria Sultana</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 rounded-full px-4 py-1">Content Editor</span>
+            </div>
+
+            <div class="profile-card cursor-pointer bg-slate-900/40 border border-slate-800 rounded-[2.5rem] p-5 text-center shadow-lg" onclick="openModal(this)">
+                <span class="contributor-number">08</span>
+                <div class="overflow-hidden rounded-[2rem] mb-4 bg-slate-800">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Imran" alt="Imran" class="w-full aspect-square object-cover hover:scale-110 transition-transform duration-700">
+                </div>
+                <h3 class="card-name text-white font-bold text-lg mb-1">Imran Khan</h3>
+                <span class="inline-block text-[9px] font-extrabold uppercase tracking-widest text-red-400 bg-red-400/10 border border-red-400/20 rounded-full px-4 py-1">Server Admin</span>
+            </div>
+
+        </div>
+
+        <footer class="mt-20 py-8 border-t border-slate-900 text-center text-slate-600 text-[10px] tracking-[0.3em] uppercase">
+            Powered by the BMC-ECO
+        </footer>
+    </div>
+
+    <div id="profileModal" onclick="closeModal()">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-[3rem] max-w-sm w-full text-center shadow-2xl transform transition-all duration-300 scale-95" onclick="event.stopPropagation()" id="modalContent">
+            <div class="overflow-hidden rounded-[2.5rem] mb-6 bg-slate-800 shadow-2xl border border-slate-800">
+                <img id="modalImg" src="" alt="" class="w-full aspect-square object-cover">
+            </div>
+            <h3 id="modalName" class="text-white font-bold text-3xl mb-2 tracking-tighter"></h3>
+            <span id="modalRole" class="inline-block text-xs font-black uppercase tracking-widest text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full px-6 py-2"></span>
+            <button onclick="closeModal()" class="mt-8 block w-full py-4 bg-slate-800/50 hover:bg-slate-700 text-slate-400 rounded-2xl font-bold transition-colors">Close View</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(element) {
+            // Automatically grab content from the clicked card
+            const imgSrc = element.querySelector('img').src;
+            const name = element.querySelector('h3').innerText;
+            const role = element.querySelector('span:not(.contributor-number)').innerText;
+
+            const modal = document.getElementById('profileModal');
+            const content = document.getElementById('modalContent');
+            
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalRole').innerText = role;
+            
+            modal.classList.add('active');
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('profileModal');
+            const content = document.getElementById('modalContent');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }, 200);
+        }
+    </script>
+</body>
+</html>
